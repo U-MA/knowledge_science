@@ -25,7 +25,7 @@ public:
 
 private:
     std::vector<double> weight_;
-    std::size_t num_neurons;
+    std::size_t         num_neurons;
 };
 
 neural_network::neural_network(std::size_t in_layer, std::size_t mid_layer,
