@@ -8,7 +8,7 @@ double sigmoid(double x)
 }
 
 // 2乗語差
-double epsilon(double out, double teach)
+double square_error(double out, double teach)
 {
     return pow(teach - out, 2) / 2.0;
 }
@@ -47,7 +47,7 @@ int main()
     out_data = sigmoid(sum);
 
     // 誤差が十分小さければ終了
-    if (epsilon(out_data, teach_data) < 0.001)
+    if (square_error(out_data, teach_data) < 0.001)
         std::cout << out_data << std::endl;
 
     ////////////////
