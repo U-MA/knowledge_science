@@ -38,6 +38,7 @@ int main()
         0
     };
 
+    for (int time=0; time < 10000; time++) {
     for (int i=0; i < 4; i++) {
         std::vector<double> input_data(inputs[i]);
         double teach_data = teaches[i];
@@ -95,5 +96,6 @@ int main()
             printf("%4.3g ", weight[i-1]);
             if (i % 5 == 0) printf("\n");
         }
+    }
     }
 }
