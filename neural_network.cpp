@@ -7,9 +7,9 @@ double sigmoid(double x)
     return 1.0 / 1.0 + exp(-x);
 }
 
-double square_error(double out, double teach)
+double square_error(double x, double y)
 {
-    return pow(teach - out, 2) / 2.0;
+    return pow(x - y, 2) / 2.0;
 }
 
 // 入力層2, 中間層2, 出力層1の階層型ニューラルネットワーク
