@@ -44,6 +44,8 @@ int main()
         0
     };
 
+    constexpr double epsilon = 0.000001;
+
     for (int time=0; time < 10000; time++) {
         for (int i=0; i < 4; i++) {
             std::vector<double> input_data(inputs[i]);
@@ -68,7 +70,7 @@ int main()
             out_data = sigmoid(sum);
 
             // 誤差が十分小さければ終了
-            if (square_error(out_data, teach_data) < 0.000001) {
+            if (square_error(out_data, teach_data) < epsilon) {
                 std::cout << input_data[0] << ", " << input_data[1] << std::endl;
                 std::cout << out_data << std::endl;
                 return 0;
