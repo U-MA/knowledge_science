@@ -88,6 +88,7 @@ int main()
             }
         }
 
+        printf("=========================\n");
         for (int i=1; i <= 25; i++) {
             printf("%4.3g ", weight[i-1]);
             if (i % 5 == 0) printf("\n");
