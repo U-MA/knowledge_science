@@ -18,6 +18,15 @@ std::size_t index(int x, int y)
     return 5 * x + y;
 }
 
+class neural_network
+{
+public:
+    neural_network(std::size_t in_layer, std::size_t mid_layer, std::size_t out_layer);
+
+private:
+    std::vector<double> weight_;
+};
+
 // 入力層2, 中間層2, 出力層1の階層型ニューラルネットワーク
 int main()
 {
