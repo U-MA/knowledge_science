@@ -25,12 +25,13 @@ public:
 
 private:
     std::vector<double> weight_;
+    std::size_t num_neurons;
 };
 
 neural_network::neural_network(std::size_t in_layer, std::size_t mid_layer,
                                std::size_t out_layer)
 {
-    const std::size_t num_neurons = in_layer + mid_layer + out_layer;
+    num_neurons = in_layer + mid_layer + out_layer;
     srand(2014);
     for (std::size_t i=0; i < num_neurons; i++) {
         weight_.push_back((rand() % 1000) / 1000);
