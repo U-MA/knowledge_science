@@ -12,6 +12,12 @@ double square_error(double x, double y)
     return pow(x-y, 2) / 2.0;
 }
 
+// weight用のインデックス
+size_t index(int x, int y)
+{
+    return 5 * x + y;
+}
+
 // 入力層2, 中間層2, 出力層1の階層型ニューラルネットワーク
 int main()
 {
@@ -48,7 +54,7 @@ int main()
             for (int i=0; i < 2; i++) {
                 double sum = 0;
                 for (int j=2; j < 4; j++) {
-                    sum += input_data[i] * weight[i * 5 + j];
+                    sum += input_data[i] * weight[index(i, j)];
                 }
                 mid_data[i] = sigmoid(sum);
             }
@@ -57,7 +63,7 @@ int main()
             double out_data = -1;
             double sum = 0;
             for (int j=0; j < 2; j++) {
-                sum += mid_data[j+2] * weight[(j+2) * 5 + 4];
+                sum += mid_data[j] * weight[index(j+2, 4)];
             }
             out_data = sigmoid(sum);
 
@@ -77,16 +83,16 @@ int main()
             std::vector<double> delta_jk(2);
             double delta_k = (teach_data - out_data) * out_data * (1 - out_data);
             for (int j=0; j < 2; j++) {
-                old_weight[(j+2) * 5 + 4] = weight[(j+2) * 5 + 4];
-                weight[(j+2) * 5 + 4] +=  delta_k * mid_data[j];
+                old_weight[index(j+2, 4)] = weight[index(j+2, 4)];
+                weight[index(j+2, 4)] +=  delta_k * mid_data[j];
             }
 
             // 中間層から入力層へ
             std::vector<double> delta_ij(2);
             for (int i=0; i < 2; i++) {
                 for (int j=2; j < 4; j++) {
-                    old_weight[i * 5 + j] = weight[i * 5 + j];
-                    weight[i * 5 + j] += - delta_k * old_weight[j * 5 + 4] * mid_data[j-2] *
+                    old_weight[index(i, j)] = weight[index(i, j)];
+                    weight[index(i, j)] += - delta_k * old_weight[index(i, 4)] * mid_data[j-2] *
                                            (1 - mid_data[j-2]) * input_data[i];
                 }
             }
