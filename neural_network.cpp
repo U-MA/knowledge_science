@@ -13,7 +13,7 @@ double square_error(double x, double y)
 }
 
 // weight用のインデックス
-size_t index(int x, int y)
+std::size_t index(int x, int y)
 {
     return 5 * x + y;
 }
