@@ -7,7 +7,6 @@ double sigmoid(double x)
     return 1.0 / 1.0 + exp(-x);
 }
 
-// 2乗語差
 double square_error(double out, double teach)
 {
     return pow(teach - out, 2) / 2.0;
