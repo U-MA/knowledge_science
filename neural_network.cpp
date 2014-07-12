@@ -24,8 +24,23 @@ int main()
     };
 
     // XORを想定
-    std::vector<double> input_data = { 1, 0 };
-    double teach_data = 1;
+    std::vector<std::vector<double>> inputs = {
+        { 0, 0 },
+        { 0, 1 },
+        { 1, 0 },
+        { 1, 1 }
+    };
+
+    std::vector<double> teaches = {
+        0,
+        1,
+        1,
+        0
+    };
+
+    for (int i=0; i < 4; i++) {
+        std::vector<double> input_data(inputs[i]);
+        double teach_data = teaches[i];
 
     // 入力層から中間層へ
     std::vector<double> mid_data(2); // 入力層の出力
@@ -76,5 +91,6 @@ int main()
     for (int i=1; i <= 25; i++) {
         printf("%4.3g ", weight[i-1]);
         if (i % 5 == 0) printf("\n");
+    }
     }
 }
