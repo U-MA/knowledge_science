@@ -61,8 +61,10 @@ int main()
         out_data = sigmoid(sum);
 
         // 誤差が十分小さければ終了
-        if (square_error(out_data, teach_data) < 0.001)
+        if (square_error(out_data, teach_data) < 0.001) {
             std::cout << out_data << std::endl;
+            return 0;
+        }
 
         ////////////////
         // 重みの更新 //
