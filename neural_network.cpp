@@ -17,9 +17,9 @@ class neural_network
 public:
     neural_network(std::size_t in_layer, std::size_t mid_layer, std::size_t out_layer);
 
-    void learn(std::vector<double> in, std::vector<double> teach);
-    std::vector<double> check(std::vector<double> in) const;
-    std::vector<double> transfer(std::vector<double> in, std::size_t in_begin,
+    void learn(const std::vector<double> in, const std::vector<double> teach);
+    std::vector<double> check(const std::vector<double> in) const;
+    std::vector<double> transfer(const std::vector<double> in, std::size_t in_begin,
                                  std::size_t out_begin, std::size_t out_size) const;
     double weight(std::size_t i, std::size_t j) const;
 
@@ -52,7 +52,7 @@ neural_network::neural_network(std::size_t in_layer, std::size_t mid_layer,
     }
 }
 
-std::vector<double> neural_network::transfer(std::vector<double> in, std::size_t in_begin,
+std::vector<double> neural_network::transfer(const std::vector<double> in, std::size_t in_begin,
                                     std::size_t out_begin, std::size_t out_size) const
 {
     std::vector<double> out_data(out_size);
@@ -66,7 +66,7 @@ std::vector<double> neural_network::transfer(std::vector<double> in, std::size_t
     return out_data;
 }
 
-void neural_network::learn(std::vector<double> in, std::vector<double> teach)
+void neural_network::learn(const std::vector<double> in, const std::vector<double> teach)
 {
     // 入力層から中間層へ
     std::vector<double> mid_data(transfer(in, 0, num_in_, num_mid_));
@@ -102,7 +102,7 @@ void neural_network::learn(std::vector<double> in, std::vector<double> teach)
     }
 }
 
-std::vector<double> neural_network::check(std::vector<double> in) const
+std::vector<double> neural_network::check(const std::vector<double> in) const
 {
     // 入力層から中間層へ
     std::vector<double> mid_data(transfer(in, 0, num_in_, num_mid_));
