@@ -64,23 +64,23 @@ double neural_network::weight(std::size_t i, std::size_t j) const
 void neural_network::learn(std::vector<double> in, std::vector<double> teach)
 {
     // 入力層から中間層へ
-    std::vector<double> mid_data(num_in_); // 入力層の出力
-    for (std::size_t i=0; i < num_in_; i++) {
+    std::vector<double> mid_data(num_mid_); // 中間層への入力
+    for (std::size_t j=0; j < num_mid_; j++) {
         double sum = 0;
-        for (std::size_t j=0; j < num_mid_; j++) {
+        for (std::size_t i=0; i < num_in_; i++) {
             sum += in[i] * weight_[i * num_neurons_ + (j+num_in_)];
         }
-        mid_data[i] = sigmoid(sum);
+        mid_data[j] = sigmoid(sum);
     }
 
     // 中間層から出力層へ
-    std::vector<double> out_data(num_mid_); // 中間層の出力
-    for (std::size_t j=0; j < num_mid_; j++) {
+    std::vector<double> out_data(num_out_); // 出力層への入力
+    for (std::size_t k=0; k < num_out_; k++) {
         double sum = 0;
-        for (std::size_t k=0; k < num_out_; k++) {
+        for (std::size_t j=0; j < num_mid_; j++) {
             sum += mid_data[j] * weight_[(j+num_in_) * num_neurons_ + (k+num_in_+num_mid_)];
         }
-        out_data[j] = sigmoid(sum);
+        out_data[k] = sigmoid(sum);
     }
 
     ////////////////
@@ -114,23 +114,23 @@ void neural_network::learn(std::vector<double> in, std::vector<double> teach)
 std::vector<double> neural_network::check(std::vector<double> in) const
 {
     // 入力層から中間層へ
-    std::vector<double> mid_data(num_in_); // 入力層の出力
-    for (std::size_t i=0; i < num_in_; i++) {
+    std::vector<double> mid_data(num_mid_); // 中間層への入力
+    for (std::size_t j=0; j < num_mid_; j++) {
         double sum = 0;
-        for (std::size_t j=0; j < num_mid_; j++) {
+        for (std::size_t i=0; i < num_in_; i++) {
             sum += in[i] * weight_[i * num_neurons_ + (j+num_in_)];
         }
-        mid_data[i] = sigmoid(sum);
+        mid_data[j] = sigmoid(sum);
     }
 
     // 中間層から出力層へ
-    std::vector<double> out_data(num_mid_); // 中間層の出力
-    for (std::size_t j=0; j < num_mid_; j++) {
+    std::vector<double> out_data(num_out_); // 出力層への入力
+    for (std::size_t k=0; k < num_out_; k++) {
         double sum = 0;
-        for (std::size_t k=0; k < num_out_; k++) {
+        for (std::size_t j=0; j < num_mid_; j++) {
             sum += mid_data[j] * weight_[(j+num_in_) * num_neurons_ + (k+num_in_+num_mid_)];
         }
-        out_data[j] = sigmoid(sum);
+        out_data[k] = sigmoid(sum);
     }
     return out_data;
 }
