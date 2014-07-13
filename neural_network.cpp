@@ -25,6 +25,8 @@ public:
 
     void learn(std::vector<double> in, std::vector<double> teach);
     std::vector<double> check(std::vector<double> in) const;
+    std::vector<double> transfer(std::vector<double> in, std::size_t in_begin,
+                                 std::size_t out_begin, std::size_t out_size) const;
     double weight(std::size_t i, std::size_t j) const;
 
     void print_weight() const
@@ -59,6 +61,20 @@ neural_network::neural_network(std::size_t in_layer, std::size_t mid_layer,
 double neural_network::weight(std::size_t i, std::size_t j) const
 {
     return weight_[i * num_neurons_ + j];
+}
+
+std::vector<double> neural_network::transfer(std::vector<double> in, std::size_t in_begin,
+                                    std::size_t out_begin, std::size_t out_size) const
+{
+    std::vector<double> out_data(out_size);
+    for (std::size_t j=0; j < out_size; j++) {
+        double sum = .0;
+        for (std::size_t i=0; i < in.size(); i++) {
+            sum += in[i] * weight_[(i+in_begin) * num_neurons_ + (j+out_begin)];
+        }
+        out_data[j] = sigmoid(sum);
+    }
+    return out_data;
 }
 
 void neural_network::learn(std::vector<double> in, std::vector<double> teach)
