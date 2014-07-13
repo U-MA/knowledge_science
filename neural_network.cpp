@@ -150,5 +150,8 @@ int main()
     for (int i=0; i < 10000; i++) {
         for (int i=0; i < 4; i++)
             nn.learn(inputs[0], teaches[0]);
+        std::vector<double> x(nn.check(inputs[0]));
+        for (std::size_t i=0; i < x.size(); i++)
+            std::cout << x[i] << std::endl;
     }
 }
