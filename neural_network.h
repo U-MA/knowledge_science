@@ -12,8 +12,6 @@ public:
 
     void learn(const std::vector<double>& in, const std::vector<double>& training);
     std::vector<double> input(const std::vector<double>& in) const;
-    std::vector<double> transfer(const std::vector<double>& in, std::size_t in_begin,
-                                 std::size_t out_begin, std::size_t out_size) const;
 
     void print_weight() const
     {
@@ -24,6 +22,9 @@ public:
     }
 
 private:
+    std::vector<double> transfer(const std::vector<double>& in, std::size_t in_begin,
+                                 std::size_t out_begin, std::size_t out_size) const;
+
     const std::size_t   num_neurons_;
     const std::size_t   in_size_;
     const std::size_t   mid_size_;
