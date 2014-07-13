@@ -96,7 +96,7 @@ void neural_network::learn(const std::vector<double> in, const std::vector<doubl
         }
         delta_j = delta_j * mid_data[j] * (1 - mid_data[j]);
         for (std::size_t i=0; i < num_in_; i++) {
-            weight_[i * num_neurons_ + (j+num_in_)] += - delta_j * mid_data[i];
+            weight_[i * num_neurons_ + (j+num_in_)] += - delta_j * in[i];
         }
     }
 }
