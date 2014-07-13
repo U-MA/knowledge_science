@@ -2,6 +2,8 @@
 #include <vector>
 #include <cmath>
 
+#include <neural_network.h>
+
 double sigmoid(double x)
 {
     return 1.0 / (1.0 + exp(-x));
@@ -11,33 +13,6 @@ double square_error(double x, double y)
 {
     return pow(x-y, 2) / 2.0;
 }
-
-// three layered neural network
-class neural_network
-{
-public:
-    neural_network(std::size_t in_size, std::size_t mid_size, std::size_t out_size);
-
-    void learn(const std::vector<double> in, const std::vector<double> teach);
-    std::vector<double> input(const std::vector<double> in) const;
-    std::vector<double> transfer(const std::vector<double> in, std::size_t in_begin,
-                                 std::size_t out_begin, std::size_t out_size) const;
-
-    void print_weight() const
-    {
-        for (std::size_t i=1; i <= num_neurons_ * num_neurons_; i++) {
-            printf("%2.2g ", weight_[i-1]);
-            if (i % num_neurons_ == 0) putchar('\n');
-        }
-    }
-
-private:
-    const std::size_t   num_neurons_;
-    const std::size_t   in_size_;
-    const std::size_t   mid_size_;
-    const std::size_t   out_size_;
-    std::vector<double> weight_;
-};
 
 neural_network::neural_network(std::size_t in_size, std::size_t mid_size,
                                std::size_t out_size)
@@ -102,32 +77,4 @@ std::vector<double> neural_network::input(const std::vector<double> in) const
 
     // middle layer to output layer
     return transfer(mid_data, in_size_, in_size_+mid_size_, out_size_);
-}
-
-int main()
-{
-    // test set is XOR
-    std::vector<std::vector<double>> inputs = {
-        { 0, 0 },
-        { 0, 1 },
-        { 1, 0 },
-        { 1, 1 }
-    };
-
-    std::vector<std::vector<double>> teaches = {
-        { 0 },
-        { 1 },
-        { 1 },
-        { 0 }
-    };
-
-    neural_network nn(2, 2, 1);
-
-    for (int i=0; i < 10000; i++) {
-        for (int j=0; j < 4; j++)
-            nn.learn(inputs[j], teaches[j]);
-    }
-    for (int i=0; i < 4; i++) {
-        std::cout << inputs[i][0] << ", " << inputs[i][1] << " | " << nn.input(inputs[i])[0] << std::endl;
-    }
 }
