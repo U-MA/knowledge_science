@@ -11,7 +11,7 @@ int main()
         { 1, 1 }
     };
 
-    std::vector<std::vector<double>> teaches = {
+    std::vector<std::vector<double>> trainings = {
         { 0 },
         { 1 },
         { 1 },
@@ -22,7 +22,7 @@ int main()
 
     for (int i=0; i < 10000; i++) {
         for (int j=0; j < 4; j++)
-            nn.learn(inputs[j], teaches[j]);
+            nn.learn(inputs[j], trainings[j]);
     }
     for (int i=0; i < 4; i++) {
         std::cout << inputs[i][0] << ", " << inputs[i][1] << " | " << nn.input(inputs[i])[0] << std::endl;

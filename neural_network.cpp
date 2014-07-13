@@ -39,7 +39,7 @@ std::vector<double> neural_network::transfer(const std::vector<double> in, std::
     return out_data;
 }
 
-void neural_network::learn(const std::vector<double> in, const std::vector<double> teach)
+void neural_network::learn(const std::vector<double> in, const std::vector<double> training)
 {
     // input layer to middle layer
     std::vector<double> mid_data = transfer(in, 0, in_size_, mid_size_);
