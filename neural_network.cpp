@@ -33,16 +33,16 @@ public:
 
 private:
     const std::size_t   num_neurons_;
-    const std::size_t   num_in_;
-    const std::size_t   num_mid_;
-    const std::size_t   num_out_;
+    const std::size_t   in_size_;
+    const std::size_t   mid_size_;
+    const std::size_t   out_size_;
     std::vector<double> weight_;
 };
 
 neural_network::neural_network(std::size_t in_size, std::size_t mid_size,
                                std::size_t out_size)
     : num_neurons_(in_size+mid_size+out_size),
-      num_in_(in_size), num_mid_(mid_size), num_out_(out_size)
+      in_size_(in_size), mid_size_(mid_size), out_size_(out_size)
 {
     srand(2014);
     for (std::size_t i=0; i < num_neurons_ * num_neurons_; i++) {
@@ -67,30 +67,30 @@ std::vector<double> neural_network::transfer(const std::vector<double> in, std::
 void neural_network::learn(const std::vector<double> in, const std::vector<double> teach)
 {
     // input layer to middle layer
-    std::vector<double> mid_data = transfer(in, 0, num_in_, num_mid_);
+    std::vector<double> mid_data = transfer(in, 0, in_size_, mid_size_);
 
     // middle layer to output layer
-    std::vector<double> out_data = transfer(mid_data, num_in_, num_in_+num_mid_, num_out_);
+    std::vector<double> out_data = transfer(mid_data, in_size_, in_size_+mid_size_, out_size_);
 
 
     std::vector<double> old_weight = weight_;
 
-    std::vector<double> delta(num_out_);
-    for (std::size_t k=0; k < num_out_; k++) {
+    std::vector<double> delta(out_size_);
+    for (std::size_t k=0; k < out_size_; k++) {
         delta[k] = - (teach[k] - out_data[k]) * out_data[k] * (1 - out_data[k]);
-        for (std::size_t j=0; j < num_mid_; j++) {
-            weight_[(j+num_in_) * num_neurons_ + (k+num_in_ + num_mid_)] += -  delta[k] * mid_data[j];
+        for (std::size_t j=0; j < mid_size_; j++) {
+            weight_[(j+in_size_) * num_neurons_ + (k+in_size_ + mid_size_)] += -  delta[k] * mid_data[j];
         }
     }
 
-    for (std::size_t j=0; j < num_mid_; j++) {
+    for (std::size_t j=0; j < mid_size_; j++) {
         double delta_j = 0;
-        for (std::size_t k=0; k < num_out_; k++) {
-            delta_j += delta[k] * old_weight[(j+num_in_) * num_neurons_ + (k+num_in_ + num_mid_)];
+        for (std::size_t k=0; k < out_size_; k++) {
+            delta_j += delta[k] * old_weight[(j+in_size_) * num_neurons_ + (k+in_size_ + mid_size_)];
         }
         delta_j = delta_j * mid_data[j] * (1 - mid_data[j]);
-        for (std::size_t i=0; i < num_in_; i++) {
-            weight_[i * num_neurons_ + (j+num_in_)] += - delta_j * in[i];
+        for (std::size_t i=0; i < in_size_; i++) {
+            weight_[i * num_neurons_ + (j+in_size_)] += - delta_j * in[i];
         }
     }
 }
@@ -98,10 +98,10 @@ void neural_network::learn(const std::vector<double> in, const std::vector<doubl
 std::vector<double> neural_network::check(const std::vector<double> in) const
 {
     // input layer to middle layer
-    std::vector<double> mid_data = transfer(in, 0, num_in_, num_mid_);
+    std::vector<double> mid_data = transfer(in, 0, in_size_, mid_size_);
 
     // middle layer to output layer
-    return transfer(mid_data, num_in_, num_in_+num_mid_, num_out_);
+    return transfer(mid_data, in_size_, in_size_+mid_size_, out_size_);
 }
 
 int main()
