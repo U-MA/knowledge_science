@@ -10,9 +10,9 @@ class neural_network
 public:
     neural_network(std::size_t in_size, std::size_t mid_size, std::size_t out_size);
 
-    void learn(const std::vector<double> in, const std::vector<double> training);
-    std::vector<double> input(const std::vector<double> in) const;
-    std::vector<double> transfer(const std::vector<double> in, std::size_t in_begin,
+    void learn(const std::vector<double>& in, const std::vector<double>& training);
+    std::vector<double> input(const std::vector<double>& in) const;
+    std::vector<double> transfer(const std::vector<double>& in, std::size_t in_begin,
                                  std::size_t out_begin, std::size_t out_size) const;
 
     void print_weight() const
