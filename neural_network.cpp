@@ -27,6 +27,14 @@ public:
     std::vector<double> check(std::vector<double> in) const;
     double weight(std::size_t i, std::size_t j) const;
 
+    void print_weight() const
+    {
+        for (std::size_t i=1; i <= num_neurons_ * num_neurons_; i++) {
+            printf("%2.2g ", weight_[i]);
+            if (i % num_neurons_ == 0) putchar('\n');
+        }
+    }
+
 private:
     std::size_t         num_neurons_;
     std::size_t         num_in_;
