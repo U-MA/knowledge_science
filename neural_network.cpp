@@ -12,12 +12,6 @@ double square_error(double x, double y)
     return pow(x-y, 2) / 2.0;
 }
 
-// weight用のインデックス
-std::size_t index(int x, int y)
-{
-    return 5 * x + y;
-}
-
 class neural_network
 {
 public:
