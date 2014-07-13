@@ -25,20 +25,6 @@ three_layer::three_layer(std::size_t in_size, std::size_t mid_size,
     }
 }
 
-std::vector<double> three_layer::transfer(const std::vector<double>& in, std::size_t in_begin,
-                                          std::size_t out_begin, std::size_t out_size) const
-{
-    std::vector<double> out_data(out_size);
-    for (std::size_t j=0; j < out_size; j++) {
-        double sum = .0;
-        for (std::size_t i=0; i < in.size(); i++) {
-            sum += in[i] * weight_[(i+in_begin) * num_neurons_ + (j+out_begin)];
-        }
-        out_data[j] = sigmoid(sum);
-    }
-    return out_data;
-}
-
 void three_layer::learn(const std::vector<double>& in, const std::vector<double>& training)
 {
     // input layer to middle layer
@@ -77,4 +63,18 @@ std::vector<double> three_layer::input(const std::vector<double>& in) const
 
     // middle layer to output layer
     return transfer(mid_data, in_size_, in_size_+mid_size_, out_size_);
+}
+
+std::vector<double> three_layer::transfer(const std::vector<double>& in, std::size_t in_begin,
+                                          std::size_t out_begin, std::size_t out_size) const
+{
+    std::vector<double> out_data(out_size);
+    for (std::size_t j=0; j < out_size; j++) {
+        double sum = .0;
+        for (std::size_t i=0; i < in.size(); i++) {
+            sum += in[i] * weight_[(i+in_begin) * num_neurons_ + (j+out_begin)];
+        }
+        out_data[j] = sigmoid(sum);
+    }
+    return out_data;
 }
