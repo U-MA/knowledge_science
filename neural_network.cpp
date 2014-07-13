@@ -25,7 +25,7 @@ public:
     void print_weight() const
     {
         for (std::size_t i=1; i <= num_neurons_ * num_neurons_; i++) {
-            printf("%2.2g ", weight_[i]);
+            printf("%2.2g ", weight_[i-1]);
             if (i % num_neurons_ == 0) putchar('\n');
         }
     }
