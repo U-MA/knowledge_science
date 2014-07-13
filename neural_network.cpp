@@ -131,10 +131,10 @@ int main()
     neural_network nn(2, 2, 1);
 
     for (int i=0; i < 10000; i++) {
-        for (int i=0; i < 4; i++)
-            nn.learn(inputs[0], teaches[0]);
-        std::vector<double> x(nn.check(inputs[0]));
-        for (std::size_t i=0; i < x.size(); i++)
-            std::cout << x[i] << std::endl;
+        for (int j=0; j < 4; j++)
+            nn.learn(inputs[j], teaches[j]);
+    }
+    for (int i=0; i < 4; i++) {
+        std::cout << inputs[i][0] << ", " << inputs[i][1] << " | " << nn.check(inputs[i])[0] << std::endl;
     }
 }
