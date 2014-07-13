@@ -21,7 +21,6 @@ public:
     std::vector<double> check(const std::vector<double> in) const;
     std::vector<double> transfer(const std::vector<double> in, std::size_t in_begin,
                                  std::size_t out_begin, std::size_t out_size) const;
-    double weight(std::size_t i, std::size_t j) const;
 
     void print_weight() const
     {
