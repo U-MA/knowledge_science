@@ -91,11 +91,11 @@ void neural_network::learn(const std::vector<double> in, const std::vector<doubl
     // 中間層から入力層へ
     for (std::size_t j=0; j < num_mid_; j++) {
         double delta_j = 0;
+        for (std::size_t k=0; k < num_out_; k++) {
+            delta_j += delta[k] * old_weight[(j+num_in_) * num_neurons_ + (k+num_in_ + num_mid_)];
+        }
+        delta_j = delta_j * mid_data[j] * (1 - mid_data[j]);
         for (std::size_t i=0; i < num_in_; i++) {
-            for (std::size_t k=0; k < num_out_; k++) {
-                delta_j += delta[k] * old_weight[(j+num_in_) * num_neurons_ + (k+num_in_ + num_mid_)];
-            }
-            delta_j = delta_j * mid_data[j] * (1 - mid_data[j]);
             weight_[i * num_neurons_ + (j+num_in_)] += - delta_j * mid_data[i];
         }
     }
