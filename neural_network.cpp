@@ -24,6 +24,7 @@ public:
     neural_network(std::size_t in_layer, std::size_t mid_layer, std::size_t out_layer);
 
     void learn(std::vector<double> in, std::vector<double> teach);
+    std::vector<double> check(std::vector<double> in) const;
     double weight(std::size_t i, std::size_t j) const;
 
 private:
@@ -100,6 +101,30 @@ void neural_network::learn(std::vector<double> in, std::vector<double> teach)
             weight_[i * num_neurons_ + (j+num_in_)] += - delta_j * mid_data[i];
         }
     }
+}
+
+std::vector<double> neural_network::check(std::vector<double> in) const
+{
+    // 入力層から中間層へ
+    std::vector<double> mid_data(num_in_); // 入力層の出力
+    for (std::size_t i=0; i < num_in_; i++) {
+        double sum = 0;
+        for (std::size_t j=0; j < num_mid_; j++) {
+            sum += in[i] * weight_[i * num_neurons_ + (j+num_in_)];
+        }
+        mid_data[i] = sigmoid(sum);
+    }
+
+    // 中間層から出力層へ
+    std::vector<double> out_data(num_mid_); // 中間層の出力
+    for (std::size_t j=0; j < num_mid_; j++) {
+        double sum = 0;
+        for (std::size_t k=0; k < num_out_; k++) {
+            sum += mid_data[j] * weight_[(j+num_in_) * num_neurons_ + (k+num_in_+num_mid_)];
+        }
+        out_data[j] = sigmoid(sum);
+    }
+    return out_data;
 }
 
 // 入力層2, 中間層2, 出力層1の階層型ニューラルネットワーク
