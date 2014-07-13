@@ -16,7 +16,7 @@ double square_error(double x, double y)
 class neural_network
 {
 public:
-    neural_network(std::size_t in_layer, std::size_t mid_layer, std::size_t out_layer);
+    neural_network(std::size_t in_size, std::size_t mid_size, std::size_t out_size);
 
     void learn(const std::vector<double> in, const std::vector<double> teach);
     std::vector<double> check(const std::vector<double> in) const;
@@ -39,10 +39,10 @@ private:
     std::vector<double> weight_;
 };
 
-neural_network::neural_network(std::size_t in_layer, std::size_t mid_layer,
-                               std::size_t out_layer)
-    : num_neurons_(in_layer+mid_layer+out_layer),
-      num_in_(in_layer), num_mid_(mid_layer), num_out_(out_layer)
+neural_network::neural_network(std::size_t in_size, std::size_t mid_size,
+                               std::size_t out_size)
+    : num_neurons_(in_size+mid_size+out_size),
+      num_in_(in_size), num_mid_(mid_size), num_out_(out_size)
 {
     srand(2014);
     for (std::size_t i=0; i < num_neurons_ * num_neurons_; i++) {
