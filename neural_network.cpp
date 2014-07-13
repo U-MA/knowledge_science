@@ -19,7 +19,7 @@ public:
     neural_network(std::size_t in_size, std::size_t mid_size, std::size_t out_size);
 
     void learn(const std::vector<double> in, const std::vector<double> teach);
-    std::vector<double> check(const std::vector<double> in) const;
+    std::vector<double> input(const std::vector<double> in) const;
     std::vector<double> transfer(const std::vector<double> in, std::size_t in_begin,
                                  std::size_t out_begin, std::size_t out_size) const;
 
@@ -95,7 +95,7 @@ void neural_network::learn(const std::vector<double> in, const std::vector<doubl
     }
 }
 
-std::vector<double> neural_network::check(const std::vector<double> in) const
+std::vector<double> neural_network::input(const std::vector<double> in) const
 {
     // input layer to middle layer
     std::vector<double> mid_data = transfer(in, 0, in_size_, mid_size_);
@@ -128,6 +128,6 @@ int main()
             nn.learn(inputs[j], teaches[j]);
     }
     for (int i=0; i < 4; i++) {
-        std::cout << inputs[i][0] << ", " << inputs[i][1] << " | " << nn.check(inputs[i])[0] << std::endl;
+        std::cout << inputs[i][0] << ", " << inputs[i][1] << " | " << nn.input(inputs[i])[0] << std::endl;
     }
 }
