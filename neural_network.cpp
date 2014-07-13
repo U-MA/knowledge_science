@@ -52,7 +52,7 @@ neural_network::neural_network(std::size_t in_layer, std::size_t mid_layer,
 }
 
 std::vector<double> neural_network::transfer(const std::vector<double> in, std::size_t in_begin,
-                                    std::size_t out_begin, std::size_t out_size) const
+                                             std::size_t out_begin, std::size_t out_size) const
 {
     std::vector<double> out_data(out_size);
     for (std::size_t j=0; j < out_size; j++) {
