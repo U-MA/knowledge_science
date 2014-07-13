@@ -52,11 +52,6 @@ neural_network::neural_network(std::size_t in_layer, std::size_t mid_layer,
     }
 }
 
-double neural_network::weight(std::size_t i, std::size_t j) const
-{
-    return weight_[i * num_neurons_ + j];
-}
-
 std::vector<double> neural_network::transfer(std::vector<double> in, std::size_t in_begin,
                                     std::size_t out_begin, std::size_t out_size) const
 {
