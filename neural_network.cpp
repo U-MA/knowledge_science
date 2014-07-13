@@ -26,23 +26,23 @@ public:
     double weight(std::size_t i, std::size_t j) const;
 
 private:
-    std::size_t         num_neurons;
+    std::size_t         num_neurons_;
     std::vector<double> weight_;
 };
 
 neural_network::neural_network(std::size_t in_layer, std::size_t mid_layer,
                                std::size_t out_layer)
 {
-    num_neurons = in_layer + mid_layer + out_layer;
+    num_neurons_ = in_layer + mid_layer + out_layer;
     srand(2014);
-    for (std::size_t i=0; i < num_neurons; i++) {
+    for (std::size_t i=0; i < num_neurons_; i++) {
         weight_.push_back((rand() % 1000) / 1000);
     }
 }
 
 double neural_network::weight(std::size_t i, std::size_t j) const
 {
-    return weight_[i * num_neurons + j];
+    return weight_[i * num_neurons_ + j];
 }
 
 // 入力層2, 中間層2, 出力層1の階層型ニューラルネットワーク
