@@ -66,16 +66,16 @@ std::vector<double> neural_network::transfer(const std::vector<double> in, std::
 void neural_network::learn(const std::vector<double> in, const std::vector<double> teach)
 {
     // 入力層から中間層へ
-    std::vector<double> mid_data(transfer(in, 0, num_in_, num_mid_));
+    std::vector<double> mid_data = transfer(in, 0, num_in_, num_mid_);
 
     // 中間層から出力層へ
-    std::vector<double> out_data(transfer(mid_data, num_in_, num_in_+num_mid_, num_out_));
+    std::vector<double> out_data = transfer(mid_data, num_in_, num_in_+num_mid_, num_out_);
 
     ////////////////
     // 重みの更新 //
     ////////////////
 
-    std::vector<double> old_weight(weight_);
+    std::vector<double> old_weight = weight_;
 
     // 出力層から中間層へ
     std::vector<double> delta(num_out_);
@@ -102,7 +102,7 @@ void neural_network::learn(const std::vector<double> in, const std::vector<doubl
 std::vector<double> neural_network::check(const std::vector<double> in) const
 {
     // 入力層から中間層へ
-    std::vector<double> mid_data(transfer(in, 0, num_in_, num_mid_));
+    std::vector<double> mid_data = transfer(in, 0, num_in_, num_mid_);
 
     // 中間層から出力層へ
     return transfer(mid_data, num_in_, num_in_+num_mid_, num_out_);
