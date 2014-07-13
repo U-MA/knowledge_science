@@ -51,7 +51,7 @@ neural_network::neural_network(std::size_t in_layer, std::size_t mid_layer,
     num_out_ = out_layer;
     num_neurons_ = in_layer + mid_layer + out_layer;
     srand(2014);
-    for (std::size_t i=0; i < num_neurons_; i++) {
+    for (std::size_t i=0; i < num_neurons_ * num_neurons_; i++) {
         weight_.push_back((rand() % 1000) / 1000.0);
     }
 }
