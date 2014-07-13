@@ -14,8 +14,8 @@ double square_error(double x, double y)
     return pow(x-y, 2) / 2.0;
 }
 
-neural_network::neural_network(std::size_t in_size, std::size_t mid_size,
-                               std::size_t out_size)
+three_layer::three_layer(std::size_t in_size, std::size_t mid_size,
+                         std::size_t out_size)
     : num_neurons_(in_size+mid_size+out_size),
       in_size_(in_size), mid_size_(mid_size), out_size_(out_size)
 {
@@ -25,8 +25,8 @@ neural_network::neural_network(std::size_t in_size, std::size_t mid_size,
     }
 }
 
-std::vector<double> neural_network::transfer(const std::vector<double>& in, std::size_t in_begin,
-                                             std::size_t out_begin, std::size_t out_size) const
+std::vector<double> three_layer::transfer(const std::vector<double>& in, std::size_t in_begin,
+                                          std::size_t out_begin, std::size_t out_size) const
 {
     std::vector<double> out_data(out_size);
     for (std::size_t j=0; j < out_size; j++) {
@@ -39,7 +39,7 @@ std::vector<double> neural_network::transfer(const std::vector<double>& in, std:
     return out_data;
 }
 
-void neural_network::learn(const std::vector<double>& in, const std::vector<double>& training)
+void three_layer::learn(const std::vector<double>& in, const std::vector<double>& training)
 {
     // input layer to middle layer
     std::vector<double> mid_data = transfer(in, 0, in_size_, mid_size_);
@@ -70,7 +70,7 @@ void neural_network::learn(const std::vector<double>& in, const std::vector<doub
     }
 }
 
-std::vector<double> neural_network::input(const std::vector<double>& in) const
+std::vector<double> three_layer::input(const std::vector<double>& in) const
 {
     // input layer to middle layer
     std::vector<double> mid_data = transfer(in, 0, in_size_, mid_size_);
