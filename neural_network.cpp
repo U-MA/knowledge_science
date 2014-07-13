@@ -28,6 +28,9 @@ public:
 
 private:
     std::size_t         num_neurons_;
+    std::size_t         num_in_;
+    std::size_t         num_mid_;
+    std::size_t         num_out_;
     std::vector<double> weight_;
 };
 
