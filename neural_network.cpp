@@ -80,24 +80,10 @@ std::vector<double> neural_network::transfer(std::vector<double> in, std::size_t
 void neural_network::learn(std::vector<double> in, std::vector<double> teach)
 {
     // 入力層から中間層へ
-    std::vector<double> mid_data(num_mid_); // 中間層への入力
-    for (std::size_t j=0; j < num_mid_; j++) {
-        double sum = 0;
-        for (std::size_t i=0; i < num_in_; i++) {
-            sum += in[i] * weight_[i * num_neurons_ + (j+num_in_)];
-        }
-        mid_data[j] = sigmoid(sum);
-    }
+    std::vector<double> mid_data(transfer(in, 0, num_in_, num_mid_));
 
     // 中間層から出力層へ
-    std::vector<double> out_data(num_out_); // 出力層への入力
-    for (std::size_t k=0; k < num_out_; k++) {
-        double sum = 0;
-        for (std::size_t j=0; j < num_mid_; j++) {
-            sum += mid_data[j] * weight_[(j+num_in_) * num_neurons_ + (k+num_in_+num_mid_)];
-        }
-        out_data[k] = sigmoid(sum);
-    }
+    std::vector<double> out_data(transfer(mid_data, num_in_, num_in_+num_mid_, num_out_));
 
     ////////////////
     // 重みの更新 //
@@ -130,25 +116,10 @@ void neural_network::learn(std::vector<double> in, std::vector<double> teach)
 std::vector<double> neural_network::check(std::vector<double> in) const
 {
     // 入力層から中間層へ
-    std::vector<double> mid_data(num_mid_); // 中間層への入力
-    for (std::size_t j=0; j < num_mid_; j++) {
-        double sum = 0;
-        for (std::size_t i=0; i < num_in_; i++) {
-            sum += in[i] * weight_[i * num_neurons_ + (j+num_in_)];
-        }
-        mid_data[j] = sigmoid(sum);
-    }
+    std::vector<double> mid_data(transfer(in, 0, num_in_, num_mid_));
 
     // 中間層から出力層へ
-    std::vector<double> out_data(num_out_); // 出力層への入力
-    for (std::size_t k=0; k < num_out_; k++) {
-        double sum = 0;
-        for (std::size_t j=0; j < num_mid_; j++) {
-            sum += mid_data[j] * weight_[(j+num_in_) * num_neurons_ + (k+num_in_+num_mid_)];
-        }
-        out_data[k] = sigmoid(sum);
-    }
-    return out_data;
+    return transfer(mid_data, num_in_, num_in_+num_mid_, num_out_);
 }
 
 // 入力層2, 中間層2, 出力層1の階層型ニューラルネットワーク
