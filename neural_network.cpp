@@ -52,6 +52,56 @@ double neural_network::weight(std::size_t i, std::size_t j) const
     return weight_[i * num_neurons_ + j];
 }
 
+void neural_network::learn(std::vector<double> in, std::vector<double> teach)
+{
+    // 入力層から中間層へ
+    std::vector<double> mid_data(num_in_); // 入力層の出力
+    for (std::size_t i=0; i < num_in_; i++) {
+        double sum = 0;
+        for (std::size_t j=0; j < num_mid_; j++) {
+            sum += in[i] * weight_[i * num_neurons_ + (j+num_in_)];
+        }
+        mid_data[i] = sigmoid(sum);
+    }
+
+    // 中間層から出力層へ
+    std::vector<double> out_data(num_mid_); // 中間層の出力
+    for (std::size_t j=0; j < num_mid_; j++) {
+        double sum = 0;
+        for (std::size_t k=0; k < num_out_; k++) {
+            sum += mid_data[j] * weight_[(j+num_in_) * num_neurons_ + (k+num_in_+num_mid_)];
+        }
+        out_data[j] = sigmoid(sum);
+    }
+
+    ////////////////
+    // 重みの更新 //
+    ////////////////
+
+    std::vector<double> old_weight(weight_);
+
+    // 出力層から中間層へ
+    std::vector<double> delta(num_out_);
+    for (std::size_t k=0; k < num_out_; k++) {
+        delta[k] = - (teach[k] - out_data[k]) * out_data[k] * (1 - out_data[k]);
+        for (std::size_t j=0; j < num_mid_; j++) {
+            weight_[(j+num_in_) * num_neurons_ + (k+num_in_ + num_mid_)] += -  delta[k] * mid_data[j];
+        }
+    }
+
+    // 中間層から入力層へ
+    for (std::size_t j=0; j < num_mid_; j++) {
+        double delta_j = 0;
+        for (std::size_t i=0; i < num_in_; i++) {
+            for (std::size_t k=0; k < num_out_; k++) {
+                delta_j += delta[k] * old_weight[(j+num_in_) * num_neurons_ + (k+num_in_ + num_mid_)];
+            }
+            delta_j = delta_j * mid_data[j] * (1 - mid_data[j]);
+            weight_[i * num_neurons_ + (j+num_in_)] += - delta_j * mid_data[i];
+        }
+    }
+}
+
 // 入力層2, 中間層2, 出力層1の階層型ニューラルネットワーク
 int main()
 {
