@@ -12,6 +12,7 @@ double square_error(double x, double y)
     return pow(x-y, 2) / 2.0;
 }
 
+// three layered neural network
 class neural_network
 {
 public:
@@ -65,19 +66,15 @@ std::vector<double> neural_network::transfer(const std::vector<double> in, std::
 
 void neural_network::learn(const std::vector<double> in, const std::vector<double> teach)
 {
-    // 入力層から中間層へ
+    // input layer to middle layer
     std::vector<double> mid_data = transfer(in, 0, num_in_, num_mid_);
 
-    // 中間層から出力層へ
+    // middle layer to output layer
     std::vector<double> out_data = transfer(mid_data, num_in_, num_in_+num_mid_, num_out_);
 
-    ////////////////
-    // 重みの更新 //
-    ////////////////
 
     std::vector<double> old_weight = weight_;
 
-    // 出力層から中間層へ
     std::vector<double> delta(num_out_);
     for (std::size_t k=0; k < num_out_; k++) {
         delta[k] = - (teach[k] - out_data[k]) * out_data[k] * (1 - out_data[k]);
@@ -86,7 +83,6 @@ void neural_network::learn(const std::vector<double> in, const std::vector<doubl
         }
     }
 
-    // 中間層から入力層へ
     for (std::size_t j=0; j < num_mid_; j++) {
         double delta_j = 0;
         for (std::size_t k=0; k < num_out_; k++) {
@@ -101,17 +97,16 @@ void neural_network::learn(const std::vector<double> in, const std::vector<doubl
 
 std::vector<double> neural_network::check(const std::vector<double> in) const
 {
-    // 入力層から中間層へ
+    // input layer to middle layer
     std::vector<double> mid_data = transfer(in, 0, num_in_, num_mid_);
 
-    // 中間層から出力層へ
+    // middle layer to output layer
     return transfer(mid_data, num_in_, num_in_+num_mid_, num_out_);
 }
 
-// 入力層2, 中間層2, 出力層1の階層型ニューラルネットワーク
 int main()
 {
-    // XORを想定
+    // test set is XOR
     std::vector<std::vector<double>> inputs = {
         { 0, 0 },
         { 0, 1 },
