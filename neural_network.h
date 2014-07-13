@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+namespace neural_network {
+
 // three layered neural network
 class three_layer
 {
@@ -32,5 +34,6 @@ private:
     std::vector<double> weight_;
 };
 
+} // namespace neural_network
 
 #endif // KNOWLEDGE_SCIENCE_NEURAL_NETWORK

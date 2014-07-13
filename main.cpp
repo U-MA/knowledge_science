@@ -18,7 +18,7 @@ int main()
         { 0 }
     };
 
-    three_layer nn(2, 2, 1);
+    neural_network::three_layer nn(2, 2, 1);
 
     for (int i=0; i < 10000; i++) {
         for (int j=0; j < 4; j++)

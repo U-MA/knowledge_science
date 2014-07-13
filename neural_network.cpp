@@ -4,6 +4,8 @@
 
 #include <neural_network.h>
 
+namespace neural_network {
+
 double sigmoid(double x)
 {
     return 1.0 / (1.0 + exp(-x));
@@ -78,3 +80,5 @@ std::vector<double> three_layer::transfer(const std::vector<double>& in, std::si
     }
     return out_data;
 }
+
+} // namespace neural_network
