@@ -17,11 +17,11 @@ double square_error(double x, double y)
 }
 
 three_layer::three_layer(std::size_t in_size, std::size_t mid_size,
-                         std::size_t out_size)
+                         std::size_t out_size, unsigned long seed)
     : num_neurons_(in_size+mid_size+out_size),
       in_size_(in_size), mid_size_(mid_size), out_size_(out_size)
 {
-    srand(2014);
+    srand(seed);
     for (std::size_t i=0; i < num_neurons_ * num_neurons_; i++) {
         weight_.push_back((rand() % 1000) / 1000.0);
     }
