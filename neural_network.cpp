@@ -23,7 +23,7 @@ three_layer::three_layer(std::size_t in_size, std::size_t mid_size,
       in_size_(in_size), mid_size_(mid_size), out_size_(out_size)
 {
     std::mt19937 engine;
-    std::uniform_real_distribution<> dist(-1.0, 1.0);
+    std::uniform_real_distribution<> dist(-0.1, 0.1);
     for (std::size_t i=0; i < num_neurons_ * num_neurons_; i++) {
         weight_.push_back(dist(engine));
     }
