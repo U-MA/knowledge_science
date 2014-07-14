@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <random>
 
 #include <neural_network.h>
 
@@ -21,9 +22,10 @@ three_layer::three_layer(std::size_t in_size, std::size_t mid_size,
     : num_neurons_(in_size+mid_size+out_size),
       in_size_(in_size), mid_size_(mid_size), out_size_(out_size)
 {
-    srand(seed);
+    std::mt19937 engine;
+    std::uniform_real_distribution<> dist(-1.0, 1.0);
     for (std::size_t i=0; i < num_neurons_ * num_neurons_; i++) {
-        weight_.push_back((rand() % 1000) / 1000.0);
+        weight_.push_back(dist(engine));
     }
 }
 
